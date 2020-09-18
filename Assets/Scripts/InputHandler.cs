@@ -12,6 +12,13 @@ namespace DS
         public float mouseX;
         public float mouseY;
 
+        public bool b_Input;
+
+        public bool rollFlag;
+        public bool isInteracting;
+        public bool sprintFlag;
+        public float rollInputTimer;
+
         PlayerControls inputActions;
         CameraHandler cameraHandler;
 
@@ -27,7 +34,7 @@ namespace DS
         {
             float delta = Time.fixedDeltaTime;
 
-            if(cameraHandler != null)
+            if (cameraHandler != null)
             {
                 cameraHandler.FollowTarget(delta);
                 cameraHandler.HandleCameraRotation(delta, mouseX, mouseY);
@@ -36,7 +43,7 @@ namespace DS
 
         public void OnEnable()
         {
-            if(inputActions == null)
+            if (inputActions == null)
             {
                 inputActions = new PlayerControls();
                 inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
@@ -54,6 +61,7 @@ namespace DS
         public void TickInput(float delta)
         {
             MoveInput(delta);
+            HandleRollInput(delta);
         }
 
         private void MoveInput(float delta)
@@ -63,6 +71,27 @@ namespace DS
             moveAmount = Mathf.Clamp01(Mathf.Abs(horizontal) + Mathf.Abs(vertical));
             mouseX = cameraInput.x;
             mouseY = cameraInput.y;
+        }
+
+        private void HandleRollInput(float delta)
+        {
+            b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Started;
+
+            if (b_Input)
+            {
+                rollInputTimer += delta;
+                sprintFlag = true;
+            }
+            else
+            {
+                if (rollInputTimer > 0 && rollInputTimer < 0.5f)
+                {
+                    sprintFlag = false;
+                    rollFlag = true;
+                }
+
+                rollInputTimer = 0;
+            }
         }
     }
 }
