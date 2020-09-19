@@ -147,6 +147,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   canRotate: 1
+--- !u!4 &316347919 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4650277051800580, guid: be1110775b758244486e193b06b2c5d6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1653069240}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &386132923
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9914104bda88a274ab90be4b5b82f2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 1257900174}
+  targetTransform: {fileID: 316347919}
   cameraTransform: {fileID: 963194228}
   cameraPivotTransform: {fileID: 386132924}
   lookSpeed: 0.1
