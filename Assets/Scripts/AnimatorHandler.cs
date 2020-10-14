@@ -6,9 +6,10 @@ namespace DS
 {
     public class AnimatorHandler : MonoBehaviour
     {
+        PlayerManager playerManager;
         public Animator anim;
-        public InputHandler InputHandler;
-        public PlayerLocomotion playerLocomotion;
+        InputHandler InputHandler;
+        PlayerLocomotion playerLocomotion;
         int vertical;
         int horizontal;
         public bool canRotate;
@@ -90,6 +91,7 @@ namespace DS
             anim.CrossFade(targetAnim, 0.2f);
         }
 
+
         public void CanRotate()
         {
             canRotate = true;
@@ -102,7 +104,7 @@ namespace DS
 
         private void OnAnimatorMove()
         {
-            if (InputHandler.isInteracting == false)
+            if (playerManager.isInteracting == false)
                 return;
 
             float delta = Time.deltaTime;
