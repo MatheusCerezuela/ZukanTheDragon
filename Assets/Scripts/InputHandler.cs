@@ -18,11 +18,13 @@ namespace DS
 
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
         public float rollInputTimer;
 
         PlayerControls inputActions;
         PlayerAttacker playerAttacker;
         PlayerIventory playerInventory;
+        PlayerManager playerManager;
 
         Vector2 movementInput;
         Vector2 cameraInput;
@@ -31,6 +33,7 @@ namespace DS
         {
             playerAttacker = GetComponent<PlayerAttacker>();
             playerInventory = GetComponent<PlayerIventory>();
+            playerManager = GetComponent<PlayerManager>();
         }
 
 
@@ -95,7 +98,22 @@ namespace DS
 
             if (rb_Input)
             {
-                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                if (playerManager.canDoCombo)
+                {
+                    comboFlag = true;
+                    playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                    comboFlag = false;
+                }
+                else
+                {
+                    if (playerManager.isInteracting)
+                        return;
+
+                    if (playerManager.canDoCombo)
+                        return;
+                    playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+                }
+
             }
 
             if (rt_Input)
